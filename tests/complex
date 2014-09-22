@@ -1,0 +1,19 @@
+r := 1;
+while ( not(o < g) ) then {
+	i := (i+1);
+}
+if ( e < r ) then {
+	derp := 0;
+} else {
+	blaat := r;
+}
+while ( 4 < 5 ) then {
+	while ( 5 < 4 ) then {
+		if ( 3 < 4 ) then {
+			somethingy := alot;
+			alot := verymuch;
+		} else {
+			somethingy := verymuch;
+		}
+	}
+}

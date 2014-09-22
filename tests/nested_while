@@ -1,0 +1,7 @@
+while(true) then {
+	vierkant := 2;
+	while(false) then {
+    	cirkel :=1;
+    }
+}
+z := 4;

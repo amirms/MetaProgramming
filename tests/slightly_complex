@@ -1,0 +1,9 @@
+r := 1;
+while ( not(o < g) ) then {
+	i := (i+1);
+}
+if ( e < r ) then {
+	derp := 0;
+} else {
+	blaat := r;
+}
