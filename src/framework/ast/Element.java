@@ -3,7 +3,7 @@ package framework.ast;
 import java.util.ArrayList;
 import java.util.List;
 
-import framework.AstGeneration;
+import framework.Framework;
 import framework.Flow;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,8 +18,8 @@ abstract public class Element {
 	private int label;
 
 	public Element() {
-		label = AstGeneration.currentLabel;
-		AstGeneration.currentLabel++;
+		label = Framework.currentLabel;
+		Framework.currentLabel++;
 	}
 
 	protected List<Element> AST = new ArrayList<Element>();
