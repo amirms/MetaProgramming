@@ -15,7 +15,7 @@ public class While extends SingleStatement {
 	public Statement block;
 
 	public String toString() {
-		return String.format("While(%s,%s)",conditional,block);
+		return String.format("While(%s,%s)", conditional, block);
 	}
 
 	public Element first() {
@@ -26,7 +26,7 @@ public class While extends SingleStatement {
 		List<Flow> res = new ArrayList<>();
 		res.add(new RegularFlow(conditional, block.first()));
 		res.addAll(block.internalFlow());
-		for ( Element e : block.last()) {
+		for (Element e : block.last()) {
 			res.add(new RegularFlow(e, conditional));
 		}
 		return res;

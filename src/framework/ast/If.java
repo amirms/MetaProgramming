@@ -16,7 +16,7 @@ public class If extends Statement {
 	public Statement elseCase;
 
 	public String toString() {
-		return String.format("IfThenElse(%s,%s,%s)",conditional,ifCase,elseCase);
+		return String.format("IfThenElse(%s,%s,%s)", conditional, ifCase, elseCase);
 	}
 
 	public Element first() {
@@ -25,8 +25,8 @@ public class If extends Statement {
 
 	public List<Flow> internalFlow() {
 		List<Flow> res = new ArrayList<>();
-		res.add(new RegularFlow(conditional,ifCase.first()));
-		res.add(new RegularFlow(conditional,elseCase.first()));
+		res.add(new RegularFlow(conditional, ifCase.first()));
+		res.add(new RegularFlow(conditional, elseCase.first()));
 		res.addAll(ifCase.internalFlow());
 		res.addAll(elseCase.internalFlow());
 		return res;

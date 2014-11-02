@@ -18,6 +18,19 @@ abstract public class Element {
 		Framework.currentLabel++;
 	}
 
+	@Override
+	public int hashCode() {
+		return label;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Element) {
+			return label == ((Element) obj).label;
+		}
+		return false;
+	}
+
 	protected List<Element> AST = new ArrayList<Element>();
 
 	public void add(Element e) {
@@ -32,7 +45,7 @@ abstract public class Element {
 			return AST.get(0).toString();
 		}
 		String x = AST.toString();
-		return x.substring(1,x.length()-1);
+		return x.substring(1, x.length() - 1);
 	}
 
 	public int getLabel() {

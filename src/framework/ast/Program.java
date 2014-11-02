@@ -48,7 +48,7 @@ public class Program extends Element {
 		for (int i = 0; i < elements.size(); i++) {
 			Element elem = elements.get(i);
 			for (Element e : prev) {
-				if ( elem instanceof Procedure ) {
+				if (elem instanceof Procedure) {
 					continue outerLoop;
 				}
 				else if (elem instanceof ProcedureCall) {

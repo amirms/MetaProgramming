@@ -14,7 +14,7 @@ public class Assignment extends SingleStatement {
 	public Expression expression;
 
 	public String toString() {
-		return String.format("Assignment(%s,%s)",id,expression);
+		return String.format("Assignment(%s,%s)", id, expression);
 	}
 
 	public Element first() {
@@ -26,7 +26,7 @@ public class Assignment extends SingleStatement {
 	}
 
 	public List<Element> last() {
-		List<Element> res =  new ArrayList<>();
+		List<Element> res = new ArrayList<>();
 		res.add(this);
 		return res;
 	}

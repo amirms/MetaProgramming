@@ -1,8 +1,5 @@
 package framework.ast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Rogier on 29-09-14.
  */
@@ -12,12 +9,12 @@ public class ID extends Element {
 	public String id;
 
 	public String toString() {
-		return String.format("ID(%s)",id);
+		return String.format("ID(%s)", id);
 	}
 
 	public boolean equals(Object that) {
-		if ( that instanceof ID) {
-			return this.id.equals(((ID)that).id);
+		if (that instanceof ID) {
+			return this.id.equals(((ID) that).id);
 		}
 		return false;
 	}

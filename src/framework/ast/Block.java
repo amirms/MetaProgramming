@@ -13,11 +13,11 @@ import framework.RegularFlow;
 public class Block extends Statement {
 
 	public String toString() {
-		return String.format("Block(%s)",super.toString());
+		return String.format("Block(%s)", super.toString());
 	}
 
 	public Element first() {
-		if ( AST.size() == 0 ) {
+		if (AST.size() == 0) {
 			return this;
 		}
 		return AST.get(0).first();
@@ -25,19 +25,20 @@ public class Block extends Statement {
 
 	public List<Flow> internalFlow() {
 		List<Flow> result = new ArrayList<>();
-		if ( AST.size() == 0 ) {
+		if (AST.size() == 0) {
 			return result;
 		}
 
 		List<Element> prev = new ArrayList<>(1);
 		prev.addAll(AST.get(0).last());
 		result.addAll(AST.get(0).internalFlow());
-		for(int i = 1; i < AST.size(); i++) {
+		for (int i = 1; i < AST.size(); i++) {
 			Element elem = AST.get(i);
-			for ( Element e : prev) {
-				if ( e instanceof ProcedureCall) {
+			for (Element e : prev) {
+				if (e instanceof ProcedureCall) {
 					result.add(new ProcedureFlow(e, elem.first()));
-				} else {
+				}
+				else {
 					result.add(new RegularFlow(e, elem.first()));
 				}
 			}
@@ -48,11 +49,11 @@ public class Block extends Statement {
 	}
 
 	public List<Element> last() {
-		if ( AST.size() == 0 ) {
+		if (AST.size() == 0) {
 			return this.last();
 		}
-		 else {
-			return AST.get(AST.size()-1).last();
+		else {
+			return AST.get(AST.size() - 1).last();
 		}
 	}
 

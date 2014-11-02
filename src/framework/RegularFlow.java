@@ -10,4 +10,9 @@ public class RegularFlow extends Flow {
 	public RegularFlow(Element from, Element to) {
 		super(from, to);
 	}
+
+	@Override
+	public Flow reverse() {
+		return new RegularFlow(to, from);
+	}
 }

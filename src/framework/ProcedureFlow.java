@@ -1,7 +1,6 @@
 package framework;
 
 import framework.ast.Element;
-import framework.ast.Procedure;
 
 /**
  * Created by Rogier on 02-11-14.
@@ -9,5 +8,10 @@ import framework.ast.Procedure;
 public class ProcedureFlow extends Flow {
 	public ProcedureFlow(Element from, Element to) {
 		super(from, to);
+	}
+
+	@Override
+	public Flow reverse() {
+		return new ProcedureFlow(to, from);
 	}
 }
