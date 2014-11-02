@@ -1,5 +1,9 @@
 package framework;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import framework.ast.Assignment;
@@ -14,6 +18,8 @@ import framework.ast.If;
 import framework.ast.Int;
 import framework.ast.MathExpression;
 import framework.ast.NotExpression;
+import framework.ast.Procedure;
+import framework.ast.ProcedureCall;
 import framework.ast.Program;
 import framework.ast.SingleStatement;
 import framework.ast.Statement;
@@ -32,6 +38,8 @@ public class MPWhileListener implements WhileListener {
 
 	private Stack<Element> elementStack = new Stack<>();
 	private Stack<Block> blockStack = new Stack<>();
+
+	private Map<ID,Procedure> procedureMap = new HashMap<>();
 
 
 	static Program FINAL_PROGRAM;
@@ -170,12 +178,38 @@ public class MPWhileListener implements WhileListener {
 
 	@Override
 	public void enterProcedure(@NotNull WhileParser.ProcedureContext ctx) {
+		Procedure procedure = new Procedure();
 
+		ID name = new ID();
+		name.id = ctx.ID(0).getText();
+		procedure.name = name;
+
+		ID returnVal = new ID();
+		returnVal.id = ctx.ID(1).getText();
+		procedure.returnVal = returnVal;
+
+		List<TerminalNode> parameters = ctx.ID();
+		parameters.remove(0);   // that was the name
+		parameters.remove(0);   // that was the return value
+
+		List<ID> parameterList = new ArrayList<>();
+		for ( TerminalNode tn : parameters ) {
+			ID id = new ID();
+			id.id = tn.getText();
+			parameterList.add(id);
+		}
+		procedure.parameters = parameterList;
+		this.elementStack.push(procedure);
 	}
 
 	@Override
 	public void exitProcedure(@NotNull WhileParser.ProcedureContext ctx) {
+		Block b = (Block)this.elementStack.pop();
+		Procedure p = (Procedure) this.elementStack.pop();
+		p.content = b;
 
+		this.procedureMap.put(p.name,p);
+		this.elementStack.push(p);
 	}
 
 	@Override
@@ -210,22 +244,29 @@ public class MPWhileListener implements WhileListener {
 
 	}
 
-//	@Override
-//	public void enterSingle_statement(@NotNull WhileParser.Single_statementContext ctx) {
-//		this.elementStack.push(new SingleStatement());
-//	}
-//
-//	@Override
-//	public void exitSingle_statement(@NotNull WhileParser.Single_statementContext ctx) {
-//		Element x = this.elementStack.pop();
-//		SingleStatement ss = (SingleStatement)this.elementStack.pop();
-//		ss.add(x);
-//		this.elementStack.push(ss);
-//	}
-
 	@Override
 	public void enterProcedureCall(@NotNull WhileParser.ProcedureCallContext ctx) {
+		ID callee = new ID();
+		callee.id = ctx.ID(0).getText();
 
+		ID returnVal = new ID();
+		returnVal.id = ctx.ID(1).getText();
+
+		List<TerminalNode> list = ctx.ID();
+		list.remove(0);
+		list.remove(0);
+		List<ID> params = new ArrayList<>();
+		for(TerminalNode tn : list) {
+			ID param = new ID();
+			param.id = tn.getText();
+			params.add(param);
+		}
+
+		ProcedureCall pc = new ProcedureCall();
+		pc.callee = this.procedureMap.get(callee);
+		pc.returnVal = returnVal;
+		pc.params = params;
+		this.elementStack.push(pc);
 	}
 
 	@Override

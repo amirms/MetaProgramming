@@ -3,9 +3,9 @@ package framework;
 import framework.ast.Element;
 
 /**
- * Created by Rogier on 22-09-14.
+ * Created by Rogier on 02-11-14.
  */
-public class Flow {
+abstract public class Flow {
 
 	public Element from;
 	public Element to;

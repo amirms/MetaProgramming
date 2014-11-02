@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import framework.Flow;
+import framework.ProcedureFlow;
+import framework.RegularFlow;
 
 /**
  * Created by Rogier on 29-09-14.
@@ -33,7 +35,11 @@ public class Block extends Statement {
 		for(int i = 1; i < AST.size(); i++) {
 			Element elem = AST.get(i);
 			for ( Element e : prev) {
-				result.add(new Flow(e,elem.first()));
+				if ( e instanceof ProcedureCall) {
+					result.add(new ProcedureFlow(e, elem.first()));
+				} else {
+					result.add(new RegularFlow(e, elem.first()));
+				}
 			}
 			result.addAll(elem.internalFlow());
 			prev = elem.last();

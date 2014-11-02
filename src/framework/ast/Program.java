@@ -3,9 +3,10 @@ package framework.ast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
 
 import framework.Flow;
+import framework.ProcedureFlow;
+import framework.RegularFlow;
 import lombok.ToString;
 
 /**
@@ -35,7 +36,7 @@ public class Program extends Element {
 
 	public String astString() {
 		String x = ast().toString();
-		return x.substring(1, x.length()-1);
+		return x.substring(1, x.length() - 1);
 	}
 
 	public List<Flow> internalFlow() {
@@ -43,16 +44,25 @@ public class Program extends Element {
 		List<Element> elements = ast();
 		List<Element> prev = new ArrayList<>(1);
 		prev.add(Program.START);
-		for(int i = 0; i < elements.size(); i++) {
+		outerLoop:
+		for (int i = 0; i < elements.size(); i++) {
 			Element elem = elements.get(i);
-			for ( Element e : prev) {
-				result.add(new Flow(e,elem.first()));
+			for (Element e : prev) {
+				if ( elem instanceof Procedure ) {
+					continue outerLoop;
+				}
+				else if (elem instanceof ProcedureCall) {
+					result.add(new ProcedureFlow(e, elem.first()));
+				}
+				else {
+					result.add(new RegularFlow(e, elem.first()));
+				}
 			}
 			result.addAll(elem.internalFlow());
 			prev = elem.last();
 		}
-		for ( Element e : prev) {
-			result.add(new Flow(e, Program.END));
+		for (Element e : prev) {
+			result.add(new RegularFlow(e, Program.END));
 		}
 		return result;
 	}

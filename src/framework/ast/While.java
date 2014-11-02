@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import framework.Flow;
+import framework.RegularFlow;
 
 /**
  * Created by Rogier on 29-09-14.
@@ -23,10 +24,10 @@ public class While extends SingleStatement {
 
 	public List<Flow> internalFlow() {
 		List<Flow> res = new ArrayList<>();
-		res.add(new Flow(conditional, block.first()));
+		res.add(new RegularFlow(conditional, block.first()));
 		res.addAll(block.internalFlow());
 		for ( Element e : block.last()) {
-			res.add(new Flow(e, conditional));
+			res.add(new RegularFlow(e, conditional));
 		}
 		return res;
 	}

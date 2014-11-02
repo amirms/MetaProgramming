@@ -3,12 +3,8 @@ package framework.ast;
 import java.util.ArrayList;
 import java.util.List;
 
-import framework.Framework;
 import framework.Flow;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.core.AST;
+import framework.Framework;
 
 /**
  * Created by Rogier on 29-09-14.
@@ -52,9 +48,7 @@ abstract public class Element {
 	}
 
 	public List<Element> last() {
-		List<Element> res =  new ArrayList<>();
-		res.add(this);
-		return res;
+		return new ArrayList<>();
 	}
 
 }

@@ -1,0 +1,16 @@
+procedure givefour(val a) {
+	a := 4;
+}
+procedure givethree(val a) {
+	a := 3;
+}
+procedure givetwo(val a) {
+	a := 2;
+}
+
+call givefour(val drie);
+if ( drie < 5 ) {
+	call givethree(val correct);
+	}
+else
+	call givetwo(val correct);

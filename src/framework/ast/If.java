@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import framework.Flow;
+import framework.RegularFlow;
 
 /**
  * Created by Rogier on 29-09-14.
@@ -24,8 +25,8 @@ public class If extends Statement {
 
 	public List<Flow> internalFlow() {
 		List<Flow> res = new ArrayList<>();
-		res.add(new Flow(conditional,ifCase.first()));
-		res.add(new Flow(conditional,elseCase.first()));
+		res.add(new RegularFlow(conditional,ifCase.first()));
+		res.add(new RegularFlow(conditional,elseCase.first()));
 		res.addAll(ifCase.internalFlow());
 		res.addAll(elseCase.internalFlow());
 		return res;

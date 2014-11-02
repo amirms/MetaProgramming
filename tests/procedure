@@ -1,0 +1,9 @@
+procedure givefour(val a) {
+	a := 4;
+}
+
+call givefour(val drie);
+if ( drie < 5 )
+	correct := 1;
+else
+	correct := 0;
