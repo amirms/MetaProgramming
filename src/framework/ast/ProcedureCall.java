@@ -12,7 +12,7 @@ public class ProcedureCall extends Statement {
 
 	public Procedure callee;
 	public ID returnVal;
-	public List<ID> params;
+	public List<Expression> params;
 
 	public String toString() { return String.format("ProcedureCall(%s,%s,%s)", callee.name.id, returnVal, params); }
 

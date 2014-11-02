@@ -1,3 +1,15 @@
+procedure thismethod( val rogier) {
+	rogier := 4;
+}
+
+procedure othermethod( val rogier, test) {
+	rogier := test;
+}
+
+procedure expmethod( val rogier, test) {
+	rogier := test;
+}
+
 r := 1;
 while ( not(o < g) ) {
 	i := (i+1);
@@ -12,8 +24,10 @@ while ( 4 < 5 ) {
 		if ( 3 < 4 ) {
 			somethingy := alot;
 			alot := verymuch;
+			call thismethod(val rogier);
 		} else {
-			somethingy := verymuch;
+			call othermethod(val somethingy, blaat);
+			call expmethod(val that, 4);
 		}
 	}
 }

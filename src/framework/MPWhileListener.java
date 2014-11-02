@@ -21,7 +21,6 @@ import framework.ast.NotExpression;
 import framework.ast.Procedure;
 import framework.ast.ProcedureCall;
 import framework.ast.Program;
-import framework.ast.SingleStatement;
 import framework.ast.Statement;
 import framework.ast.While;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -39,7 +38,7 @@ public class MPWhileListener implements WhileListener {
 	private Stack<Element> elementStack = new Stack<>();
 	private Stack<Block> blockStack = new Stack<>();
 
-	private Map<ID,Procedure> procedureMap = new HashMap<>();
+	private Map<ID, Procedure> procedureMap = new HashMap<>();
 
 
 	static Program FINAL_PROGRAM;
@@ -51,7 +50,7 @@ public class MPWhileListener implements WhileListener {
 
 	@Override
 	public void exitS_while(@NotNull WhileParser.S_whileContext ctx) {
-		Statement block = (Statement)this.elementStack.pop();
+		Statement block = (Statement) this.elementStack.pop();
 		Expression conditional = (Expression) this.elementStack.pop();
 		While statement = (While) this.elementStack.pop();
 
@@ -95,17 +94,19 @@ public class MPWhileListener implements WhileListener {
 	@Override
 	public void exitAssignment(@NotNull WhileParser.AssignmentContext ctx) {
 		Element value = this.elementStack.pop();
-		if ( value instanceof Expression) {
-			Expression exp = (Expression)value;
+		if (value instanceof Expression) {
+			Expression exp = (Expression) value;
 			value = this.elementStack.pop();
-			if ( value instanceof Assignment) {
-				Assignment assignment = (Assignment)value;
+			if (value instanceof Assignment) {
+				Assignment assignment = (Assignment) value;
 				assignment.expression = exp;
 				this.elementStack.push(assignment);
-			} else {
+			}
+			else {
 				System.err.println("Found " + value);
 			}
-		} else {
+		}
+		else {
 			System.err.println("Found " + value);
 		}
 	}
@@ -139,9 +140,9 @@ public class MPWhileListener implements WhileListener {
 
 	@Override
 	public void exitMathExpression(@NotNull WhileParser.MathExpressionContext ctx) {
-		Expression right = (Expression)this.elementStack.pop();
+		Expression right = (Expression) this.elementStack.pop();
 		String operator = ctx.mathOperator().getText();
-		Expression left = (Expression)this.elementStack.pop();
+		Expression left = (Expression) this.elementStack.pop();
 		MathExpression exp = (MathExpression) this.elementStack.pop();
 
 		exp.left = left;
@@ -157,7 +158,7 @@ public class MPWhileListener implements WhileListener {
 
 	@Override
 	public void exitNotExpression(@NotNull WhileParser.NotExpressionContext ctx) {
-		Expression subExpression = (Expression)this.elementStack.pop();
+		Expression subExpression = (Expression) this.elementStack.pop();
 		NotExpression exp = (NotExpression) this.elementStack.pop();
 
 		exp.subExpression = subExpression;
@@ -171,7 +172,7 @@ public class MPWhileListener implements WhileListener {
 
 	@Override
 	public void exitProgram(@NotNull WhileParser.ProgramContext ctx) {
-		while(!this.elementStack.empty()) {
+		while (!this.elementStack.empty()) {
 			MPWhileListener.FINAL_PROGRAM.add(this.elementStack.pop());
 		}
 	}
@@ -193,7 +194,7 @@ public class MPWhileListener implements WhileListener {
 		parameters.remove(0);   // that was the return value
 
 		List<ID> parameterList = new ArrayList<>();
-		for ( TerminalNode tn : parameters ) {
+		for (TerminalNode tn : parameters) {
 			ID id = new ID();
 			id.id = tn.getText();
 			parameterList.add(id);
@@ -204,11 +205,11 @@ public class MPWhileListener implements WhileListener {
 
 	@Override
 	public void exitProcedure(@NotNull WhileParser.ProcedureContext ctx) {
-		Block b = (Block)this.elementStack.pop();
+		Block b = (Block) this.elementStack.pop();
 		Procedure p = (Procedure) this.elementStack.pop();
 		p.content = b;
 
-		this.procedureMap.put(p.name,p);
+		this.procedureMap.put(p.name, p);
 		this.elementStack.push(p);
 	}
 
@@ -219,9 +220,9 @@ public class MPWhileListener implements WhileListener {
 
 	@Override
 	public void exitBinaryExpression(@NotNull WhileParser.BinaryExpressionContext ctx) {
-		Expression right = (Expression)this.elementStack.pop();
+		Expression right = (Expression) this.elementStack.pop();
 		String operator = ctx.binaryOperator().getText();
-		Expression left = (Expression)this.elementStack.pop();
+		Expression left = (Expression) this.elementStack.pop();
 		BinaryExpression exp = (BinaryExpression) this.elementStack.pop();
 
 		exp.left = left;
@@ -252,26 +253,23 @@ public class MPWhileListener implements WhileListener {
 		ID returnVal = new ID();
 		returnVal.id = ctx.ID(1).getText();
 
-		List<TerminalNode> list = ctx.ID();
-		list.remove(0);
-		list.remove(0);
-		List<ID> params = new ArrayList<>();
-		for(TerminalNode tn : list) {
-			ID param = new ID();
-			param.id = tn.getText();
-			params.add(param);
-		}
-
 		ProcedureCall pc = new ProcedureCall();
 		pc.callee = this.procedureMap.get(callee);
 		pc.returnVal = returnVal;
-		pc.params = params;
+
 		this.elementStack.push(pc);
 	}
 
 	@Override
 	public void exitProcedureCall(@NotNull WhileParser.ProcedureCallContext ctx) {
+		List<Expression> params = new ArrayList<>();
+		while (this.elementStack.peek() instanceof Expression) {
+			params.add((Expression) this.elementStack.pop());
+		}
 
+		ProcedureCall pc = (ProcedureCall) this.elementStack.pop();
+		pc.params = params;
+		this.elementStack.push(pc);
 	}
 
 	@Override
@@ -305,16 +303,17 @@ public class MPWhileListener implements WhileListener {
 	public void exitBlock(@NotNull WhileParser.BlockContext ctx) {
 		Stack<Statement> tmp = new Stack<>();
 		Statement x;
-		while(true) {
-			x = (Statement)this.elementStack.pop();
-			if ( x == this.blockStack.peek() ) {
+		while (true) {
+			x = (Statement) this.elementStack.pop();
+			if (x == this.blockStack.peek()) {
 				this.blockStack.pop();
 				// Ended
-				while(!tmp.empty()) {
+				while (!tmp.empty()) {
 					x.add(tmp.pop());
 				}
 				break;
-			} else {
+			}
+			else {
 				tmp.push(x);
 			}
 		}
@@ -328,8 +327,8 @@ public class MPWhileListener implements WhileListener {
 
 	@Override
 	public void exitS_if(@NotNull WhileParser.S_ifContext ctx) {
-		Statement elseCase = (Statement)this.elementStack.pop();
-		Statement ifCase = (Statement)this.elementStack.pop();
+		Statement elseCase = (Statement) this.elementStack.pop();
+		Statement ifCase = (Statement) this.elementStack.pop();
 		Expression conditional = (Expression) this.elementStack.pop();
 		If statement = (If) this.elementStack.pop();
 

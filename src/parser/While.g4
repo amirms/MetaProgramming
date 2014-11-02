@@ -15,7 +15,7 @@ procedure:          'procedure' ID '(' 'val' ID (',' ID)* ')' block;
 s_if:               'if' expression statement 'else' statement;
 s_while:            'while' expression statement;
 assignment:         ID ':=' expression ';';
-procedureCall:      'call' ID '(' 'val' ID (',' ID)* ')' ';';
+procedureCall:      'call' ID '(' 'val' ID (',' expression)* ')' ';';
 
 expression:         '(' unaryExpression ')' | '(' binaryExpression ')' | '(' mathExpression ')' | intExpression | bool | idExpression;
 intExpression:      Int;
