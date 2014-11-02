@@ -1,5 +1,4 @@
-if ( x < 4 ) then {
+if ( x < 4 ) {
 	x := 5;
-} else {
+} else
 	z := 1;
-}

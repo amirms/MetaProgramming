@@ -12,8 +12,8 @@ program:            statement+ ;
 statement:          block | s_if | s_while | assignment | procedure;
 block:              '{' statement* '}';
 procedure:          'procedure' ID '(' 'val' ID (',' ID)* ')' block;
-s_if:               'if' expression 'then' statement 'else' statement;
-s_while:            'while' expression 'then' statement;
+s_if:               'if' expression statement 'else' statement;
+s_while:            'while' expression statement;
 assignment:         ID ':=' expression ';';
 
 expression:         '(' unaryExpression ')' | '(' binaryExpression ')' | '(' mathExpression ')' | procedureCall | intExpression | bool | idExpression;

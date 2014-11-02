@@ -1,8 +1,8 @@
 r := 1;
-while ( not(o < g) ) then {
+while ( not(o < g) ) {
 	i := (i+1);
 }
-if ( e < r ) then {
+if ( e < r ) {
 	derp := 0;
 } else {
 	blaat := r;

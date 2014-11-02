@@ -21,7 +21,7 @@ public class Framework
 	public static int currentLabel = 1;
 
 	public static String TESTDIR = "/Users/Rogier/Dropbox/Studie/ST Software Technology/IN4313 Seminar Metaprogramming/assignment1/tests/";
-	public static String TESTFILE = "complex";
+	public static String TESTFILE = "if";
 
 	public static void main( String[] args) {
 		try {

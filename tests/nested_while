@@ -1,6 +1,6 @@
-while(true) then {
+while(true) {
 	vierkant := 2;
-	while(false) then {
+	while(false) {
     	cirkel :=1;
     }
 }

@@ -1,15 +1,15 @@
 r := 1;
-while ( not(o < g) ) then {
+while ( not(o < g) ) {
 	i := (i+1);
 }
-if ( e < r ) then {
+if ( e < r ) {
 	derp := 0;
 } else {
 	blaat := r;
 }
-while ( 4 < 5 ) then {
-	while ( 5 < 4 ) then {
-		if ( 3 < 4 ) then {
+while ( 4 < 5 ) {
+	while ( 5 < 4 ) {
+		if ( 3 < 4 ) {
 			somethingy := alot;
 			alot := verymuch;
 		} else {
