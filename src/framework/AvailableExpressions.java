@@ -18,6 +18,7 @@ import framework.ast.ID;
 import framework.ast.IdExpression;
 import framework.ast.If;
 import framework.ast.Int;
+import framework.ast.ProcedureCall;
 import framework.ast.Program;
 import framework.ast.While;
 
@@ -43,6 +44,13 @@ public class AvailableExpressions extends Analysis {
 					res.add(ar);
 				}
 			}
+		} else if ( e instanceof ProcedureCall) {
+			ID id = ((ProcedureCall)e).returnVal;
+			for ( AnalysisResult ar:expressions) {
+				if ( ar.containsId(id)) {
+					res.add(ar);
+				}
+			}
 		}
 		return res;
 	}
@@ -62,6 +70,13 @@ public class AvailableExpressions extends Analysis {
 			res.add(new AvailableExpressionsResult((Expression)e,e.getLabel()));
 			for ( Expression subexp : ((Expression)e).getChildren()) {
 				res.addAll(gen(subexp));
+			}
+		} else if ( e instanceof ProcedureCall) {
+			for( Expression param: ((ProcedureCall)e).params) {
+				res.add(new AvailableExpressionsResult(param,e.getLabel()));
+				for (Expression subexp : param.getChildren()) {
+					res.addAll(gen(subexp));
+				}
 			}
 		}
 		expressions.addAll(res);

@@ -8,10 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 
 import framework.ast.Assignment;
 import framework.ast.Element;
 import framework.ast.ID;
+import framework.ast.Procedure;
+import framework.ast.ProcedureCall;
 import framework.ast.Program;
 
 /**
@@ -36,6 +39,14 @@ public class ReachingDefinitions extends Analysis {
 					res.add(new ReachingDefinitionsResult(id, i));
 				}
 			}
+		} else if (e instanceof ProcedureCall) {
+			ID id = ((ProcedureCall)e).returnVal;
+			res.add(new ReachingDefinitionsResult(id, -1));
+			if (assignments.containsKey(id)) {
+				for (Integer i : assignments.get(id)) {
+					res.add(new ReachingDefinitionsResult(id, i));
+				}
+			}
 		}
 		return res;
 	}
@@ -45,6 +56,17 @@ public class ReachingDefinitions extends Analysis {
 		Set<AnalysisResult> res = new HashSet<>();
 		if (e instanceof Assignment) {
 			ID id = ((Assignment) e).id;
+			res.add(new ReachingDefinitionsResult(id, e.getLabel()));
+			if (assignments.containsKey(id)) {
+				assignments.get(id).add(e.getLabel());
+			}
+			else {
+				List<Integer> i = new ArrayList<>(1);
+				i.add(e.getLabel());
+				assignments.put(id, i);
+			}
+		} else if ( e instanceof ProcedureCall) {
+			ID id = ((ProcedureCall) e).returnVal;
 			res.add(new ReachingDefinitionsResult(id, e.getLabel()));
 			if (assignments.containsKey(id)) {
 				assignments.get(id).add(e.getLabel());
