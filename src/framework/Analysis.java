@@ -51,7 +51,8 @@ abstract public class Analysis {
 				map.put(f.from.getLabel(), pair);
 			}
 		}
-		map.remove(1);
+		map.remove(1); // Thats the Program.START one, we dont care about that
+		map.remove(1); // Thats the Program.END one, we dont care about that either
 		result = map;
 		return map;
 	}
