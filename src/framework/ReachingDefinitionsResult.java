@@ -33,7 +33,6 @@ public class ReachingDefinitionsResult extends AnalysisResult {
 	}
 
 
-
 	public String toString() {
 		return String.format("(%s,%s)", id, label);
 	}

@@ -1,10 +1,7 @@
 package framework.ast;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
-import java.util.TreeSet;
 
 /**
  * Created by Rogier on 30-09-14.
@@ -32,8 +29,8 @@ public class NotExpression extends Expression {
 
 	@Override
 	public boolean equals(Object obj) {
-		if ( obj instanceof NotExpression) {
-			NotExpression that = (NotExpression)obj;
+		if (obj instanceof NotExpression) {
+			NotExpression that = (NotExpression) obj;
 			return this.subExpression.equals(that.subExpression);
 		}
 		return false;
@@ -41,6 +38,6 @@ public class NotExpression extends Expression {
 
 	@Override
 	public int hashCode() {
-		return subExpression.hashCode()-1;
+		return subExpression.hashCode() - 1;
 	}
 }

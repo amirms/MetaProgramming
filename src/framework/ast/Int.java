@@ -26,9 +26,9 @@ public class Int extends Expression {
 
 	@Override
 	public boolean equals(Object obj) {
-		if ( obj instanceof Int) {
-			Int that = (Int)obj;
-			return this.value==that.value;
+		if (obj instanceof Int) {
+			Int that = (Int) obj;
+			return this.value == that.value;
 		}
 		return false;
 	}

@@ -23,7 +23,7 @@ public class AvailableExpressionsResult extends AnalysisResult {
 
 	@Override
 	public int compareTo(Object o) {
-		AvailableExpressionsResult that = (AvailableExpressionsResult)o;
+		AvailableExpressionsResult that = (AvailableExpressionsResult) o;
 		return this.expression.hashCode() - that.expression.hashCode();
 	}
 
@@ -48,9 +48,9 @@ public class AvailableExpressionsResult extends AnalysisResult {
 	}
 
 	public boolean equals(Object obj) {
-		if ( obj instanceof AvailableExpressionsResult) {
-			AvailableExpressionsResult that = (AvailableExpressionsResult)obj;
-			return this.label==that.label && this.expression.equals(that.expression);
+		if (obj instanceof AvailableExpressionsResult) {
+			AvailableExpressionsResult that = (AvailableExpressionsResult) obj;
+			return this.label == that.label && this.expression.equals(that.expression);
 		}
 		return false;
 	}

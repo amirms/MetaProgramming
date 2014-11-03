@@ -8,12 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.function.Predicate;
 
 import framework.ast.Assignment;
 import framework.ast.Element;
 import framework.ast.ID;
-import framework.ast.Procedure;
 import framework.ast.ProcedureCall;
 import framework.ast.Program;
 
@@ -39,8 +37,9 @@ public class ReachingDefinitions extends Analysis {
 					res.add(new ReachingDefinitionsResult(id, i));
 				}
 			}
-		} else if (e instanceof ProcedureCall) {
-			ID id = ((ProcedureCall)e).returnVal;
+		}
+		else if (e instanceof ProcedureCall) {
+			ID id = ((ProcedureCall) e).returnVal;
 			res.add(new ReachingDefinitionsResult(id, -1));
 			if (assignments.containsKey(id)) {
 				for (Integer i : assignments.get(id)) {
@@ -65,7 +64,8 @@ public class ReachingDefinitions extends Analysis {
 				i.add(e.getLabel());
 				assignments.put(id, i);
 			}
-		} else if ( e instanceof ProcedureCall) {
+		}
+		else if (e instanceof ProcedureCall) {
 			ID id = ((ProcedureCall) e).returnVal;
 			res.add(new ReachingDefinitionsResult(id, e.getLabel()));
 			if (assignments.containsKey(id)) {
@@ -81,29 +81,29 @@ public class ReachingDefinitions extends Analysis {
 	}
 
 	@Override
-	public Collection<AnalysisResult> entry(Element e,int i) {
+	public Collection<AnalysisResult> entry(Element e, int i) {
 		if (e.equals(Program.START)) {
 			return new HashSet<>();
 		}
 		Set<AnalysisResult> res = new TreeSet<>();
 		for (Element workElement : getAllNodesWithDirection(e, AnalysisDirection.BACKWARDS)) {
 			Collection<AnalysisResult> x = this.exitTable.get(new IterationElement(i, workElement));
-			if ( x == null ) {
+			if (x == null) {
 				x = new HashSet<>();
 			}
 			res.addAll(x);
 		}
-		this.entryTable.put(new IterationElement(i,e),res);
+		this.entryTable.put(new IterationElement(i, e), res);
 		return res;
 	}
 
 	@Override
-	public Collection<AnalysisResult> exit(Element e,int i) {
+	public Collection<AnalysisResult> exit(Element e, int i) {
 		if (e.equals(Program.START)) {
 			return new HashSet<>();
 		}
-		Collection<AnalysisResult> res = this.entryTable.get(new IterationElement(i-1,e));
-		if ( res == null ) {
+		Collection<AnalysisResult> res = this.entryTable.get(new IterationElement(i - 1, e));
+		if (res == null) {
 			res = new HashSet<>();
 		}
 		for (AnalysisResult ar : kill(e)) {
@@ -111,7 +111,7 @@ public class ReachingDefinitions extends Analysis {
 		}
 		res.addAll(gen(e));
 		res = new TreeSet<>(res);
-		this.exitTable.put(new IterationElement(i,e),res);
+		this.exitTable.put(new IterationElement(i, e), res);
 		return res;
 	}
 }

@@ -1,7 +1,6 @@
 package framework.ast;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by Rogier on 29-09-14.

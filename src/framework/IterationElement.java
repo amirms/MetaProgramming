@@ -16,12 +16,12 @@ public class IterationElement {
 	}
 
 	public int hashCode() {
-		return 2*iteration + 17*element.hashCode();
+		return 2 * iteration + 17 * element.hashCode();
 	}
 
 	public boolean equals(Object obj) {
-		if ( obj instanceof IterationElement) {
-			IterationElement that = (IterationElement)obj;
+		if (obj instanceof IterationElement) {
+			IterationElement that = (IterationElement) obj;
 			return this.iteration == that.iteration && this.element.equals(that.element);
 		}
 		return false;

@@ -1,10 +1,7 @@
 package framework.ast;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
-import java.util.TreeSet;
 
 /**
  * Created by Rogier on 29-09-14.
@@ -21,7 +18,7 @@ public class BinaryExpression extends Expression {
 
 	@Override
 	public boolean containsId(ID id) {
-		return left.containsId(id)||right.containsId(id);
+		return left.containsId(id) || right.containsId(id);
 	}
 
 	@Override
@@ -36,8 +33,8 @@ public class BinaryExpression extends Expression {
 
 	@Override
 	public boolean equals(Object obj) {
-		if ( obj instanceof BinaryExpression) {
-			BinaryExpression that = (BinaryExpression)obj;
+		if (obj instanceof BinaryExpression) {
+			BinaryExpression that = (BinaryExpression) obj;
 			return this.operator.equals(that.operator) && this.left.equals(that.left) && this.right.equals(that.right);
 		}
 		return false;
@@ -45,6 +42,6 @@ public class BinaryExpression extends Expression {
 
 	@Override
 	public int hashCode() {
-		return operator.hashCode()+17*left.hashCode()+33*right.hashCode();
+		return operator.hashCode() + 17 * left.hashCode() + 33 * right.hashCode();
 	}
 }

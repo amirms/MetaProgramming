@@ -1,8 +1,6 @@
 package framework.ast;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.TreeSet;
 
 /**
@@ -28,16 +26,16 @@ public class BooleanExpression extends Expression {
 
 	@Override
 	public boolean equals(Object obj) {
-		if ( obj instanceof MathExpression) {
-			BooleanExpression that = (BooleanExpression)obj;
-			return this.value==that.value;
+		if (obj instanceof MathExpression) {
+			BooleanExpression that = (BooleanExpression) obj;
+			return this.value == that.value;
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return value?1:0;
+		return value ? 1 : 0;
 	}
 
 
