@@ -34,7 +34,7 @@ public class Flow {
 	}
 
 	public String toString() {
-		return String.format("From %s to %s", from.getLabel(), to.getLabel());
+		return String.format("From %d [%s] to %d [%s]\n", from.getLabel(), from, to.getLabel(), to);
 	}
 
 	public Flow reverse() {

@@ -25,4 +25,6 @@ abstract public class AnalysisResult implements Comparable {
 	}
 
 	abstract public Collection<Element> getSet();
+
+	public void add(ID id, int value) {}
 }

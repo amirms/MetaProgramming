@@ -18,7 +18,7 @@ public class Framework {
 
 	public static String TESTDIR =
 			"/Users/Rogier/Dropbox/Studie/ST Software Technology/IN4313 Seminar Metaprogramming/assignment1/tests/";
-	public static String TESTFILE1 = "ae_example";
+	public static String TESTFILE1 = "da_example";
 
 	public static void main(String[] args) {
 		try {
@@ -33,12 +33,12 @@ public class Framework {
 
 			System.out.println();
 
-			System.out.println("Reaching definitions");
-			Analysis rd = new ReachingDefinitions(MPWhileListener.FINAL_PROGRAM.internalFlow());
-			System.out.println(rd.performAnalysis());
+//			System.out.println("Reaching definitions");
+//			Analysis rd = new ReachingDefinitions(MPWhileListener.FINAL_PROGRAM.internalFlow());
+//			System.out.println(rd.performAnalysis());
 
-			System.out.println("Available expressions");
-			rd = new AvailableExpressions(MPWhileListener.FINAL_PROGRAM.internalFlow());
+			System.out.println("Definite Assignments");
+			Analysis rd = new DefiniteAssignments(MPWhileListener.FINAL_PROGRAM.internalFlow());
 			System.out.println(rd.performAnalysis());
 		}
 		catch (IOException e) {

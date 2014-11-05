@@ -16,7 +16,7 @@ public class IterationElement {
 	}
 
 	public int hashCode() {
-		return 2 * iteration + 17 * element.hashCode();
+		return 5 * iteration + 37 * element.hashCode();
 	}
 
 	public boolean equals(Object obj) {
