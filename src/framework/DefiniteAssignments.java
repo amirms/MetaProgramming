@@ -9,7 +9,9 @@ import java.util.TreeSet;
 
 import framework.ast.Assignment;
 import framework.ast.Element;
+import framework.ast.Expression;
 import framework.ast.Program;
+import framework.ast.While;
 
 /**
  * Created by Rogier on 02-11-14.
@@ -42,19 +44,21 @@ public class DefiniteAssignments extends Analysis {
 		if (e.equals(Program.START)) {
 			return new HashSet<>();
 		}
+		if ( e.getLabel() == 8 ) {
+			System.err.println("found the bitch");
+		}
+		// Error is it requires the join. However if something is defined before the loop it should not consider the stuff in the loop
 		Set<AnalysisResult> res = new TreeSet<>(assignments);
 		for (Element workElement : getAllNodesWithDirection(e, AnalysisDirection.BACKWARDS)) {
+			// check if workElement will ultimately depend on e again. If so, ignore
+			if ( hasCircularDependency(e,workElement,this.cfg.size())) {
+				continue;
+			}
 			Collection<AnalysisResult> x = this.exitTable.get(new IterationElement(i, workElement));
 			if (x == null) {
 				x = new HashSet<>();
 			}
-			Set<AnalysisResult> oldRes = new TreeSet<>(res);
-			res = new TreeSet<>();
-			for (AnalysisResult y : x) {
-				if (oldRes.contains(y)) {
-					res.add(y);
-				}
-			}
+			res.retainAll(x);
 		}
 		this.entryTable.put(new IterationElement(i, e), res);
 		return res;
@@ -65,7 +69,7 @@ public class DefiniteAssignments extends Analysis {
 		if (e.equals(Program.START)) {
 			return new HashSet<>();
 		}
-		Collection<AnalysisResult> res = this.entryTable.get(new IterationElement(i - 1, e));
+		Collection<AnalysisResult> res = this.entryTable.get(new IterationElement(i , e));
 		if (res == null) {
 			res = entry(e, i);
 		}
@@ -76,5 +80,20 @@ public class DefiniteAssignments extends Analysis {
 		res = new TreeSet<>(res);
 		this.exitTable.put(new IterationElement(i, e), res);
 		return res;
+	}
+
+	private boolean hasCircularDependency(Element first, Element dependee, int remaining ) {
+		if ( remaining <= 0) {
+			return false;
+		}
+		if ( first.equals(dependee) ) {
+			return true;
+		}
+		for( Element e : getAllNodesWithDirection(dependee, AnalysisDirection.BACKWARDS)) {
+			if ( hasCircularDependency(first,e,remaining-1)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
