@@ -58,7 +58,7 @@ public class AvailableExpressions extends Analysis {
 			return res;
 		}
 		if (e instanceof Assignment) {
-			res.add(new AvailableExpressionsResult(((Assignment) e).expression, e.getLabel()));
+			res.addAll(gen(((Assignment) e).expression));
 			for (Expression subexp : ((Assignment) e).expression.getChildren()) {
 				res.addAll(gen(subexp));
 			}
