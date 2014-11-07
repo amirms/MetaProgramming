@@ -1,3 +1,5 @@
+![TUDelft logo](http://www.tudelft.nl/fileadmin/Default/Templates/images/logo.gif)
+
 # Monotone framework for Meta Programming
 
 ## Why
