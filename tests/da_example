@@ -1,6 +1,16 @@
-a := 2;
-while ( x == 4 ) {
-	y := 2;
-	x := 4;
+procedure derp(val a, b , c) {
+	a = (b+c);
 }
-z := ((a+y)+x);
+
+a := 4;
+b := a;
+if ( b == a) {
+	b := (b+1);
+	call derp(val c,a,b);
+	d := 3
+} else {
+	b := (b-1);
+	d := 2;
+	e := b;
+}
+z := ((a+b)+d);

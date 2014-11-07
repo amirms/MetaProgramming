@@ -9,9 +9,8 @@ import java.util.TreeSet;
 
 import framework.ast.Assignment;
 import framework.ast.Element;
-import framework.ast.Expression;
+import framework.ast.ProcedureCall;
 import framework.ast.Program;
-import framework.ast.While;
 
 /**
  * Created by Rogier on 02-11-14.
@@ -34,6 +33,8 @@ public class DefiniteAssignments extends Analysis {
 		Collection<AnalysisResult> res = new HashSet<>();
 		if (e instanceof Assignment) {
 			res.add(new DefiniteAssignmentsResult(((Assignment) e).id, e.getLabel()));
+		} else if ( e instanceof ProcedureCall) {
+			res.add(new DefiniteAssignmentsResult(((ProcedureCall)e).returnVal,e.getLabel()));
 		}
 		assignments.addAll(res);
 		return res;
