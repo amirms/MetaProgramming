@@ -17,8 +17,23 @@ These systems are called _monotone frameworks_ and are the main focus of this as
 ## How to run
 
 Simple clone the Github project to your PC and start your favorite IDE.
-The open the file `src/framework/Framework`.
-Here you can define the file to run on, the Analysis to perform and which data you are interested in
+Then open the file `src/framework/Framework`.
+Here you can define the file to run on, the analysis to perform and which data you are interested in.
+
+The following outputs may be interesting:
+
+````java
+// To get the programs AST
+System.out.println(MPWhileListener.FINAL_PROGRAM.astString());
+
+// To get the program CFG
+System.out.println(MPWhileListener.FINAL_PROGRAM.internalFlow());
+
+// To perform an analysis
+// change the AvailableExpressions to another class which implements Analysis to do other analyses
+Analysis rd = new AvailableExpressions(MPWhileListener.FINAL_PROGRAM.internalFlow());
+System.out.println(rd.performAnalysis());
+````
 
 ## How to modify
 
