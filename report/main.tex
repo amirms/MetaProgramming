@@ -184,7 +184,8 @@ A `while` loop has one entry point (the conditional), internal flow (from the co
 \\
 \\
 Using the above approach, the CFG could be generated (one needs to take the constraints posed by section \ref{sec:language} into account).
-This is done by calling the method `internalFlow()` on the earlier generated `FINAL\_PROGRAM` variable.
+This is done by calling the method `internalFlow()` on the earlier generated `FINAL\_PROGRAM` variable. The method than processes the tree recursively.
+For clarity, additional `START` and `END` nodes are added to the CFG.
 The control flow logic data can be found in the `framework/ast` package.
 
 \subsection{Program analysis}
@@ -192,11 +193,12 @@ The control flow logic data can be found in the `framework/ast` package.
 Finally one can perform the analysis.
 For this, one needs to subclass the `Analysis` class, and when desired the `AnalysisResult` class.
 Next step is to define four methods: two for determining the `gen` and `kill` sets of every label, and two for defining the analysis results on the entry and exit of every label.
-If one is familiar with the analysis, this is fairly straightforward (it took the author only 125 lines to define the `AvailableExpressions` analysis, including all imports and whitespace \cite{ar}).
+If one is familiar with the analysis, this is fairly straightforward (it took the author only 125 lines to define the `AvailableExpressions` analysis, including all imports and whitespace \cite{ar}). Next, one defines which direction should be used to traverse the CFG.
 \\
 \\
 Finally one can create an object from the class and call the `performAnalysis()` method on it.
 The results will then be sent back in a Map, consisting of labels and the entry and exit values for the label.
+The values in the Map will be calculated by reiteration over previous solutions several times, so it is ensures the solution which is returned is stable.
 This part of the software can be found in the `framework` package. The map contains `ExitEntryPair`s, which are the type and effect systems of the analysis.
 
 

@@ -37,7 +37,7 @@ public class Framework {
 //			Analysis rd = new ReachingDefinitions(MPWhileListener.FINAL_PROGRAM.internalFlow());
 //			System.out.println(rd.performAnalysis());
 
-			System.out.println("Definite Assignments");
+			System.out.println(" Assignments");
 			Analysis rd = new AvailableExpressions(MPWhileListener.FINAL_PROGRAM.internalFlow());
 			System.out.println(rd.performAnalysis());
 		}
