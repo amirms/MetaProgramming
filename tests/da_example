@@ -1,5 +1,5 @@
 procedure derp(val a, b , c) {
-	a = (b+c);
+	a := (b+c);
 }
 
 a := 4;
@@ -7,7 +7,7 @@ b := a;
 if ( b == a) {
 	b := (b+1);
 	call derp(val c,a,b);
-	d := 3
+	d := 3;
 } else {
 	b := (b-1);
 	d := 2;
